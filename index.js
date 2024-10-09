@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs');
+require("dotenv").config();
 const express = require('express'); // إضافة مكتبة express
 const app = express();
 
@@ -9,7 +9,12 @@ app.get('/get-token', async (req, res) => {
   try {
     const browser = await puppeteer.launch({
       headless: true, 
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
         executablePath:
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
